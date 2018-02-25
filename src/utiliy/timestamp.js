@@ -1,4 +1,4 @@
-export const formatDateTime = function (inputTime) {
+export const formatDateTime = (inputTime) => {
   let date = new Date(inputTime)
   let y = date.getFullYear()
   let m = date.getMonth() + 1
@@ -13,3 +13,5 @@ export const formatDateTime = function (inputTime) {
   second = second < 10 ? ('0' + second) : second
   return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second
 }
+
+export const nowTimeToTimestamp = () => new Date().getTime()

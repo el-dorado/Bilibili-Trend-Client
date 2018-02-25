@@ -1,4 +1,4 @@
-import {fromNicknameQueryUid} from '@/helper/get-data'
+import {fromNicknameQueryUid} from './GetData'
 
 /**
  * 处理用户搜索结果

@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-expressions */
 import axios from 'axios'
-import {getUpSubmitInfo} from '@/helper/get-data'
+
 import {Video} from '@/model/Video'
 import {Up} from '@/model/Up'
-import * as _ from 'lodash'
 import {MEMBER_URL} from '../helper/config'
+import {getUpSubmitInfo} from './GetData'
 
 /**
  * 从 Vlist 转换到 Submit(Video<array>)
@@ -20,6 +20,7 @@ export async function fromVlistToSubmit (vlist) {
     vl.title = v.title
     vl.play = v.play
     vl.created = v.created
+    vl.favorites = v.favorites
     allVlist.push(vl)
   }
   return allVlist
@@ -74,19 +75,9 @@ export async function handleUpSubmit (id) {
         }
       })
   }
-  allVlist = await fromVlistToSubmit(allVlist)
-
-  up.submit = allVlist
-  up.playCount = getAllPlayCount(allVlist)
+  up.rawAllList = await fromVlistToSubmit(allVlist)
+  // up.playCount = getAllPlayCount(allVlist)
   up.name = allVlist[0].author
 
-  up.sortByPlayCount = await sort(allVlist)
-  up.sortByPlayCount = up.sortByPlayCount.slice(0, 10)
   return up
-}
-
-function sort (allVlist) {
-  return _.sortBy(allVlist, function (item) {
-    return -item.play
-  })
 }

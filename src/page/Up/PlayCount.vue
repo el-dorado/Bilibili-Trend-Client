@@ -1,39 +1,70 @@
 <template>
-  <el-main>
-    <div ref="img" style="width: 100%;height:400px;">
+  <div class="root">
+    <div>
+      <input-up-info></input-up-info>
+    </div>
+    <v-layout>
+      <v-flex sm="5">
+        <v-text-field type="number" v-model="num"
+                      :disabled="Loading" placeholder="要查看的数量">
+        </v-text-field>
+      </v-flex>
+      <v-flex>
+        <v-btn @click="asc().byFavorite()" :disabled="Loading">按收藏查看</v-btn>
+        <v-btn @click="asc().byPlayCount()" :disabled="Loading">按播放量查看</v-btn>
+      </v-flex>
+    </v-layout>
+    <div ref="img" style="width: 100%;height:600px;">
 
     </div>
-  </el-main>
+  </div>
 </template>
 
 <script>
 import * as echarts from 'echarts'
+import InputUpInfo from '../../components/common/inputUpInfo'
+import {mapState} from 'vuex'
 
 export default {
   name: 'play-count',
-  props: ['Up'],
+  components: {InputUpInfo},
   data: function () {
     return {
       img: null,
-      playCount: [],
-      titles: []
+      titles: [],
+      seriesData: [],
+      num: 10
     }
   },
   mounted: function () {
-
+    this.img = this.$refs.img
   },
-  watch: {
-    'Up': function () {
-      this.img = this.$refs.img
-      for (let item of this.Up.sortByPlayCount) {
-        this.titles.push(item.title)
-        this.playCount.push(item.play)
-      }
-
-      this.initEcharts()
-    }
+  watch: {},
+  computed: {
+    ...mapState(['Up', 'Loading'])
   },
   methods: {
+    asc () {
+      this.titles = []
+      this.seriesData = []
+      const that = this
+      return {
+        byPlayCount () {
+          for (let item of that.Up.asc().byPlayCount().slice(0, that.num)) {
+            that.titles.push(item.title)
+            that.seriesData.push(item.play)
+          }
+          that.initEcharts()
+        },
+        byFavorite () {
+          for (let item of that.Up.asc().byFavorite().slice(0, that.num)) {
+            that.titles.push(item.title)
+            that.seriesData.push(item.favorites)
+          }
+          that.initEcharts()
+        }
+      }
+    },
     initEcharts () {
       echarts.init(this.img).setOption({
         title: {
@@ -64,16 +95,16 @@ export default {
           {
             name: this.Up.name,
             type: 'bar',
-            data: this.playCount
+            data: this.seriesData
           }
         ]
-
       })
     }
   }
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="stylus">
+  .root
+    width 100%
 </style>

@@ -1,6 +1,6 @@
 
 import axios from 'axios'
-import {MEMBER_URL, SEARCH_URL} from './config'
+import {MEMBER_URL, SEARCH_URL} from '../helper/config'
 
 export const getUpSubmitInfo = async function (id) {
   const result = await axios.get(MEMBER_URL, {params: {mid: id, pagesize: 100}})
