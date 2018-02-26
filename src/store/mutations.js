@@ -9,8 +9,21 @@ export const changeLoadingState = (state, payload) => {
   state.Loading = payload
 }
 
+export const changeSearchUserRecState = (state, payload) => {
+  state.SearchUserRec = payload
+}
+export const changeRecUpState = (state, payload) => {
+  state.RecUp = payload
+}
+export const changeRecUpMIDState = (state, payload) => {
+  state.RecUpMID = payload
+}
+
 export default {
   changeUpState,
-  changeLoadingState
+  changeRecUpState,
+  changeRecUpMIDState,
+  changeLoadingState,
+  changeSearchUserRecState
 
 }

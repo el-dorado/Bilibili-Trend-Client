@@ -67,6 +67,9 @@ export default {
     },
     initEcharts () {
       echarts.init(this.img).setOption({
+        align: 'left',
+        verticalAlign: 'middle',
+        position: 'insideBottom',
         title: {
           text: this.Up.name + '视频热度排行',
           subtext: '副标题'
@@ -89,7 +92,8 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: this.titles
+          data: this.titles,
+          nameRotate: '80%'
         },
         series: [
           {

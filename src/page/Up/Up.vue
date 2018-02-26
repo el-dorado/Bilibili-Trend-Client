@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout>
-      <v-flex v-for="r of routerInfo" :key="r.router">
+      <v-flex v-for="r of routerInfo" :key="r.router" xs3 sm2 md2 lg2>
         <v-btn color="primary" @click="go(r.router)">{{r.name}}</v-btn>
       </v-flex>
     </v-layout>
@@ -20,7 +20,8 @@ export default {
   data: function () {
     return {
       routerInfo: [
-        {name: '查看历史最高', router: '/up/playcount/'}
+        {name: '查看历史最高', router: '/up/top/'},
+        {name: '对比 UP 信息', router: '/up/difference/'}
       ]
     }
   },
@@ -28,6 +29,9 @@ export default {
     go (addr) {
       this.$router.push(addr)
     }
+  },
+  beforeCreate: function () {
+    this.$store.dispatch('getMainSiteRankAction')
   }
 }
 </script>

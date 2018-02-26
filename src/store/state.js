@@ -1,8 +1,22 @@
 // state
 const Up = null
+
 const Loading = false
+
+const Error = false
+
+const SearchUserRec = []
+
+const RecUp = []
+const RecUpMID = []
+
+// const
 
 export default {
   Up,
-  Loading
+  RecUp,
+  RecUpMID,
+  Loading,
+  Error,
+  SearchUserRec
 }

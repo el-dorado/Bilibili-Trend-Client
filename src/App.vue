@@ -6,7 +6,11 @@
         <router-view></router-view>
       </v-container>
     </v-content>
-    <v-footer app></v-footer>
+    <v-footer app>
+      <v-layout class="text-sm-center">
+        仅供个人学习使用 <a target="_blank" href="https://github.com/muxi2015/Bilibili-Trend-Client">源代码</a>
+      </v-layout>
+    </v-footer>
   </v-app>
 </template>
 
@@ -18,13 +22,9 @@ export default {
   components: {MHeader},
   name: 'App',
   data: function () {
-    return {
-
-    }
+    return {}
   },
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
 

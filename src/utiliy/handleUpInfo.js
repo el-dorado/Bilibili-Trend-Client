@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import {Video} from '@/model/Video'
 import {Up} from '@/model/Up'
-import {MEMBER_URL} from '../helper/config'
+import {MEMBER_URL, SEARCH_URSE_URL} from '../helper/config'
 import {getUpSubmitInfo} from './GetData'
 
 /**
@@ -13,14 +13,7 @@ export async function fromVlistToSubmit (vlist) {
   let allVlist = []
   for (let v of vlist) {
     let vl = new Video()
-    vl.author = v.author
-    vl.comment = v.comment
-    vl.description = v.description
-    vl.pic = v.pic
-    vl.title = v.title
-    vl.play = v.play
-    vl.created = v.created
-    vl.favorites = v.favorites
+    vl.init(v)
     allVlist.push(vl)
   }
   return allVlist
@@ -80,4 +73,9 @@ export async function handleUpSubmit (id) {
   up.name = allVlist[0].author
 
   return up
+}
+
+export async function searchUserRec (name) {
+  const {data} = await axios.get(SEARCH_URSE_URL, {params: {keyword: name}})
+  return data
 }

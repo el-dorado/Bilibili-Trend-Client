@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs6 sm6 md4 lg4>
+    <v-flex xs6 sm2 md4 lg4>
       <v-text-field
         name="upid"
         v-model="uid"
@@ -8,40 +8,59 @@
         placeholder="请输入 UP 主 ID">
       </v-text-field>
     </v-flex>
-    <v-flex xs2>
+    <v-flex xs4 sm2>
       <v-btn @click="onUid">确定</v-btn>
     </v-flex>
-    <v-flex xs6 sm6 md4 lg4>
-      <v-text-field
-        name="upid"
-        v-model="avid"
-        prefix="av"
-        @keyup.enter="onAvid"
-        placeholder="或者输入ta制作的视频 av 号">
-      </v-text-field>
+    <!--todo: 近期进行重构-->
+    <v-flex xs6 sm3 md4 lg4>
+      <v-select
+        v-model="name"
+        autocomplete
+        cache-items
+        :search-input.sync="search"
+        :items="RecUp"
+        label="尝试直接输入 UP 主昵称"
+        :disabled="true">
+      </v-select>
     </v-flex>
     <v-flex xs2>
-      <v-btn @click="onAvid">确定</v-btn>
+      <v-btn @click="onName" :disabled="true">暂时无法使用</v-btn>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
   name: 'inputUpInfo',
   data: function () {
     return {
-      avid: '',
-      uid: '423895'
+      name: '',
+      uid: '423895',
+      search: null
+
     }
   },
   methods: {
-    onAvid () {
-
-    },
     onUid () {
       this.$store.dispatch('getUpDetailAction', this.uid)
+    },
+    query (v) {
+      this.$store.dispatch('getSearchUserRecAction', v)
+    },
+    onName () {
+      console.log(this.RecUp)
+      console.log(this.RecUpMID[this.RecUp.indexOf(this.name)])
     }
+  },
+  watch: {
+    search (val) {
+      val && this.query(val)
+    }
+  },
+  computed: {
+    ...mapState(['RecUp', 'RecUpMID'])
   }
 }
 </script>

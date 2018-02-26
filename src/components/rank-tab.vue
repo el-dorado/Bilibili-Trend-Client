@@ -1,12 +1,15 @@
 <template>
-<div>
 
-</div>
 </template>
 
 <script>
 export default {
-  name: 'main'
+  name: 'rank-tab',
+  data: function () {
+    return {
+
+    }
+  }
 }
 </script>
 

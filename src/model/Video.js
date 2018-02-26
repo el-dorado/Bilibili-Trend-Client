@@ -44,4 +44,15 @@ export class Video {
    * @type {string}
    */
   author = '怕上火暴王老菊'
+
+  init (vlist) {
+    this.author = vlist.author
+    this.comment = vlist.comment
+    this.description = vlist.description
+    this.pic = vlist.pic
+    this.title = vlist.title
+    this.play = vlist.play
+    this.created = vlist.created
+    this.favorites = vlist.favorites
+  }
 }

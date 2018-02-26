@@ -24,6 +24,14 @@ page=4
 | pagesize        | 每页返回的数量，最大100       |
 | page            | 显示页内容，可以配合 pagesize |
 
+## 从视频中获取 UP 信息
+```
+https://api.bilibili.com/x/web-interface/
+card?
+callback=jQuery17203315846063444545_1519535784552&
+mid=306805&
+jsonp=jsonp&
+```
 
 ## 搜索
 
