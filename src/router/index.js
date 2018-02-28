@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MMain from '@/page/main/m-main'
-import RamkList from '../components/common/rankList'
+import RankList from '../components/common/rankList'
 import Up from '@/page/up/Up'
 import Top from '@/page/up/Top'
 import Difference from '@/page/up/difference'
@@ -16,11 +16,12 @@ export default new Router({
       component: MMain,
       name: 'm-main',
       children: [
-        {path: 'all', component: RamkList, name: 'all'},
-        {path: 'bangumi', component: RamkList, name: 'bangumi'},
-        {path: 'origin', component: RamkList, name: 'origin'},
-        {path: 'cinema', component: RamkList, name: 'cinema'},
-        {path: 'rookie', component: RamkList, name: 'rookie'}
+        {path: 'all', component: RankList, name: 'all'},
+        {path: 'bangumi', component: RankList, name: 'bangumi'},
+        {path: 'origin', component: RankList, name: 'origin'},
+        {path: 'cinema', component: RankList, name: 'cinema'},
+        {path: 'rookie', component: RankList, name: 'rookie'},
+        {path: '', redirect: 'all'}
       ]
     },
     {
@@ -39,7 +40,7 @@ export default new Router({
     },
     {
       path: '/',
-      redirect: '/main'
+      redirect: '/main/all'
     }
   ]
 })

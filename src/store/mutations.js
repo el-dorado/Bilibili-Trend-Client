@@ -18,12 +18,16 @@ export const changeRecUpState = (state, payload) => {
 export const changeRecUpMIDState = (state, payload) => {
   state.RecUpMID = payload
 }
+export const changeRankListState = (state, payload) => {
+  state.RankList = payload
+}
 
 export default {
   changeUpState,
   changeRecUpState,
   changeRecUpMIDState,
   changeLoadingState,
+  changeRankListState,
   changeSearchUserRecState
 
 }

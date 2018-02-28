@@ -10,6 +10,8 @@ const SearchUserRec = []
 const RecUp = []
 const RecUpMID = []
 
+const RankList = []
+
 // const
 
 export default {
@@ -18,5 +20,6 @@ export default {
   RecUpMID,
   Loading,
   Error,
-  SearchUserRec
+  SearchUserRec,
+  RankList
 }

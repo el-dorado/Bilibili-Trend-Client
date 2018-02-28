@@ -1,17 +1,13 @@
 // action
 import axios from 'axios'
 import * as _ from 'lodash'
-// 获取 推挤新歌单
-// const getPersonalizedAction = async function ({commit}) {
-//   const {result} = await this.$axios.$get(personalizedUrl)
-//   // 获取歌单信息，随机取 6 个
-//   const data = await getRandomArray(result, 6)
-//
-//   commit('changeRecommendPlayListState', data)
-// }
-
 import {searchUserRec, handleUpSubmit} from '../utiliy/handleUpInfo'
-import {MAIN_SITE_RANK_URL} from '../helper/config'
+import {MAIN_SITE_RANK_URL, RANK_URL} from '../helper/config'
+
+const getRankListAction = async function ({commit}, url) {
+  let {data} = await axios.get(RANK_URL + url)
+  commit('changeRankListState', data.rank.list)
+}
 
 const getUpDetailAction = async function ({commit}, id) {
   commit('changeLoadingState', true)
@@ -53,5 +49,6 @@ const getMainSiteRankAction = async function (ctx) {
 export default {
   getUpDetailAction,
   getSearchUserRecAction,
-  getMainSiteRankAction
+  getMainSiteRankAction,
+  getRankListAction
 }
