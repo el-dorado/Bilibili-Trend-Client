@@ -1,5 +1,5 @@
 <template>
-  <div ref="container" style="width: 100%;height: 400px;padding: 20px 0 0 0">
+  <div ref="container" style="width: 100%;height: 600px;padding: 20px 0 0 0">
 
   </div>
 </template>
@@ -12,17 +12,33 @@ import * as _ from 'lodash'
 export default {
   name: 'rankList',
   data: function () {
-    return {}
+    return {
+      chart: null
+    }
   },
   beforeCreate: function () {
-
+  },
+  mounted: function () {
+    const that = this
+    this.$nextTick(function () {
+      window.addEventListener('resize', () => {
+        that.resizeScreen()
+      })
+    })
   },
   computed: {
     ...mapState(['RankList'])
   },
+  methods: {
+    resizeScreen () {
+      this.$refs.container.style.width = window.innerWidth + 'px'
+      this.chart.resize()
+    }
+  },
   watch: {
     RankList: function () {
-      echarts.init(this.$refs.container).setOption({
+      this.chart = echarts.init(this.$refs.container)
+      this.chart.setOption({
         title: {
           text: '图表如下'
         },
