@@ -2,6 +2,7 @@ export const BASE_URL = 'https://bird.ioliu.cn/v1?url='
 
 // 下列 URL 具体参数参考 'analysis.md' 文件
 export const MEMBER_URL = BASE_URL + 'https://space.bilibili.com/ajax/member/getSubmitVideos?'
+
 // https://search.bilibili.com/api/search?search_type=bili_user&keyword=%E7%8E%8B%E8%80%81%E8%8F%8A&user_type=0&page=1
 export const SEARCH_URL = BASE_URL + 'https://search.bilibili.com/api/search?'
 

@@ -1,5 +1,5 @@
 <template>
-  <div ref="container" style="width: 100%;height: 600px;padding: 20px 0 0 0">
+  <div ref="container" style="width: 100%;height: 700px;padding: 20px 0 0 0">
 
   </div>
 </template>
@@ -26,14 +26,14 @@ export default {
       })
     })
   },
-  computed: {
-    ...mapState(['RankList'])
-  },
   methods: {
     resizeScreen () {
       this.$refs.container.style.width = window.innerWidth + 'px'
       this.chart.resize()
     }
+  },
+  computed: {
+    ...mapState(['RankList'])
   },
   watch: {
     RankList: function () {
@@ -75,6 +75,9 @@ export default {
         yAxis: [
           {
             type: 'value'
+            // max: function f () {
+            //   return 1000000
+            // }
           }
         ],
         series: [

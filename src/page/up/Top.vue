@@ -4,14 +4,10 @@
       <input-up-info></input-up-info>
     </div>
     <v-layout>
-      <v-flex sm="5">
-        <v-text-field type="number" v-model="num"
-                      :disabled="Loading" placeholder="要查看的数量">
-        </v-text-field>
-      </v-flex>
       <v-flex>
-        <v-btn @click="asc().byFavorite()" :disabled="Loading">按收藏查看</v-btn>
-        <v-btn @click="asc().byPlayCount()" :disabled="Loading">按播放量查看</v-btn>
+        <v-btn @click="getUpSubmit('stow')" :disabled="!BtnState">按收藏查看</v-btn>
+        <v-btn @click="getUpSubmit('click')" :disabled="!BtnState">按播放量查看</v-btn>
+        <p v-if="!Loading" style="color: red">点击上方查看</p>
       </v-flex>
     </v-layout>
     <div ref="img" style="width: 100%;height:600px;">
@@ -22,8 +18,10 @@
 
 <script>
 import * as echarts from 'echarts'
+import * as _ from 'lodash'
 import InputUpInfo from '../../components/common/inputUpInfo'
 import {mapState} from 'vuex'
+import {getUpTop} from '../../utiliy/handleUpInfo'
 
 export default {
   name: 'play-count',
@@ -31,9 +29,9 @@ export default {
   data: function () {
     return {
       img: null,
-      titles: [],
-      seriesData: [],
-      num: 10
+      upData: null,
+      upName: '',
+      chart: null
     }
   },
   mounted: function () {
@@ -41,37 +39,30 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapState(['Up', 'Loading'])
+    ...mapState(['Up', 'Loading', 'UpMid', 'BtnState'])
   },
   methods: {
-    asc () {
-      this.titles = []
-      this.seriesData = []
+    async getUpSubmit (type) {
       const that = this
-      return {
-        byPlayCount () {
-          for (let item of that.Up.asc().byPlayCount().slice(0, that.num)) {
-            that.titles.push(item.title)
-            that.seriesData.push(item.play)
-          }
-          that.initEcharts()
-        },
-        byFavorite () {
-          for (let item of that.Up.asc().byFavorite().slice(0, that.num)) {
-            that.titles.push(item.title)
-            that.seriesData.push(item.favorites)
-          }
-          that.initEcharts()
-        }
-      }
+      this.upData = await getUpTop(this.UpMid, type)
+      this.UpName = _.map(this.upData, 'author')[0]
+      this.initEcharts(type === 'stow' ? 'favorites' : 'play')
+      window.addEventListener('resize', () => {
+        that.resizeScreen()
+      })
     },
-    initEcharts () {
-      echarts.init(this.img).setOption({
+    resizeScreen () {
+      this.$refs.img.style.width = window.innerWidth + 'px'
+      this.chart.resize()
+    },
+    initEcharts: function (type) {
+      this.chart = echarts.init(this.img)
+      this.chart.setOption({
         align: 'left',
         verticalAlign: 'middle',
         position: 'insideBottom',
         title: {
-          text: this.Up.name + '视频热度排行',
+          text: this.UpName + '视频热度排行',
           subtext: '副标题'
         },
         tooltip: {
@@ -80,26 +71,37 @@ export default {
             type: 'shadow'
           }
         },
+        dataZoom: [{
+          type: 'slider',
+          start: 0,
+          end: 5
+        }],
         grid: {
           left: '0%',
           right: '4%',
           bottom: '3%',
           containLabel: true
         },
-        xAxis: {
+        yAxis: {
           type: 'value',
           boundaryGap: [0, 0.01]
         },
-        yAxis: {
+        xAxis: {
           type: 'category',
-          data: this.titles,
-          nameRotate: '80%'
+          data: _.map(this.upData, 'title'),
+          // nameRotate: '80%'
+          zlevel: 1,
+          axisLabel: {
+            interval: 0,
+            rotate: 90,
+            inside: true
+          }
         },
         series: [
           {
-            name: this.Up.name,
+            name: type === 'favorites' ? '收藏' : '点击',
             type: 'bar',
-            data: this.seriesData
+            data: _.map(this.upData, type)
           }
         ]
       })

@@ -1,6 +1,14 @@
 // mutation
 // 用于存放同步的 action
 
+export const changeBtnState = (state, payload) => {
+  state.BtnState = payload
+}
+
+export const changeUpMidState = (state, payload) => {
+  state.UpMid = payload
+}
+
 export const changeUpState = (state, payload) => {
   state.Up = payload
 }
@@ -23,6 +31,8 @@ export const changeRankListState = (state, payload) => {
 }
 
 export default {
+  changeBtnState,
+  changeUpMidState,
   changeUpState,
   changeRecUpState,
   changeRecUpMIDState,

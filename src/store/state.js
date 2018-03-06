@@ -3,11 +3,15 @@ const Up = null
 
 const Loading = false
 
+const BtnState = false
+const UpMid = null
+
 const Error = false
 
 const SearchUserRec = []
 
 const RecUp = []
+
 const RecUpMID = []
 
 const RankList = []
@@ -20,6 +24,8 @@ export default {
   RecUpMID,
   Loading,
   Error,
+  BtnState,
   SearchUserRec,
-  RankList
+  RankList,
+  UpMid
 }

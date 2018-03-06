@@ -1,10 +1,31 @@
 /* eslint-disable no-unused-expressions */
 import axios from 'axios'
-
+import * as _ from 'lodash'
 import {Video} from '@/model/Video'
 import {Up} from '@/model/Up'
 import {MEMBER_URL, SEARCH_URSE_URL} from '../helper/config'
 import {getUpSubmitInfo} from './GetData'
+
+/**
+ * 传入 Up 主 ID,获取排序过的视频
+ * @param mid UP 的id
+ * @param type 排序类型 stow:收藏 click:点击 pubdate:最近更新
+ * @returns {Promise<Array>}
+ */
+export async function getUpTop (mid, type) {
+  const pages = await getPage(mid)
+  let list = []
+  for (let i = 0; i < pages; i++) {
+    const {data} = await axios.get(MEMBER_URL, {params: {mid: mid, page: i, pagesize: 100, order: type}})
+    list = _.concat(list, data.data.vlist)
+  }
+  return list
+}
+
+export async function getPage (mid) {
+  const {data} = await getUpSubmitInfo(mid)
+  return data.data.pages
+}
 
 /**
  * 从 Vlist 转换到 Submit(Video<array>)

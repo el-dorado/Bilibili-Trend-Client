@@ -44,14 +44,14 @@ export default {
   },
   methods: {
     onUid () {
-      this.$store.dispatch('getUpDetailAction', this.uid)
+      this.$store.commit('changeBtnState', true)
+      this.$store.commit('changeUpMidState', this.uid)
     },
     query (v) {
-      this.$store.dispatch('getSearchUserRecAction', v)
+
     },
     onName () {
-      console.log(this.RecUp)
-      console.log(this.RecUpMID[this.RecUp.indexOf(this.name)])
+
     }
   },
   watch: {
