@@ -5,6 +5,7 @@
         name="upid"
         v-model="uid"
         @keyup.enter="onUid"
+        type="number"
         placeholder="请输入 UP 主 ID">
       </v-text-field>
     </v-flex>

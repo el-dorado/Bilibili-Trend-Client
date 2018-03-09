@@ -9,7 +9,7 @@ import Difference from '@/page/up/difference'
 Vue.use(Router)
 
 export default new Router({
-  base: '/Bilibili-Trend-Client/',
+  // base: '/Bilibili-Trend-Client/',
   mode: 'history',
   routes: [
     {
